@@ -6,8 +6,13 @@ from django.utils import timezone
 
 from .models import Choice, Question
 
+import logging
+
+logger = logging.getLogger('django')
 
 class IndexView(generic.ListView):
+    logger.debug('DEBUG: IndexView Called.')
+
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
 
@@ -19,6 +24,8 @@ class IndexView(generic.ListView):
 
 
 class DetailView(generic.DetailView):
+    logger.debug('DEBUG: DetailView Called.')
+
     model = Question
     template_name = 'polls/detail.html'
 
@@ -30,15 +37,21 @@ class DetailView(generic.DetailView):
 
 
 class ResultsView(generic.DetailView):
+    logger.debug('DEBUG: ResultsView Called.')
+
     model = Question
     template_name = 'polls/results.html'
 
 
 def vote(request, question_id):
+    logger.debug('DEBUG: vote Called.')
+
     question = get_object_or_404(Question, pk=question_id)
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
+        logger.info('Info: %s' % e)
+
         # Redisplay the question voting form.
         return render(request, 'polls/detail.html', {
             'question': question,
