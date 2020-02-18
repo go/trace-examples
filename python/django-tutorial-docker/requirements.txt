@@ -1,3 +1,5 @@
 ddtrace
 Django
 psycopg2
+gunicorn
+JSON-log-formatter
