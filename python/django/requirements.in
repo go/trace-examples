@@ -1,2 +1,2 @@
-django<1.9
+django<2.3
 whitenoise
